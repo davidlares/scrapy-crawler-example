@@ -11,3 +11,7 @@ class BasicCrawlerItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     title = scrapy.Field() # data model or things for crawl
+    email = scrapy.Field()
+    comments = scrapy.Field()
+    form = scrapy.Field()
+    location_url = scrapy.Field()

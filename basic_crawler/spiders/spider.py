@@ -36,3 +36,27 @@ class MySpider(BaseSpider):
         		full_url=response.urljoin(link)
         		visited_links.append(full_url) # creating an absolute URL
         		yield Request(full_url, self.parse)
+
+        # Scraping Forms
+		forms = hxs.xpath('//form/@action').extract()
+		for form in forms:
+			form_item = BasicCrawlerItem()
+			form_item["form"] = form
+			form_item["location_url"] = response.url
+			yield form_item
+
+		# Scraping emails
+		emails = hxs.xpath("//*[contains(text(),'@')]").extract()
+		for email in emails:
+			e = BasicCrawlerItem()
+			e["email"] = email
+			e["location_url"] = response.url
+			yield e
+
+		# Scraping comments
+		comments = hxs.xpath('//comment()').extract()
+		for comment in comments:
+			c = BasicCrawlerItem()
+			c["comments"] = comment
+			c["location_url"] = response.url
+			yield c
